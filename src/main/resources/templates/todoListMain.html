@@ -4,93 +4,8 @@
 <head>
     <title>Todo List</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" th:href="@{myStyle.css}">
 </head>
-
-<style>
-
-    /*body {*/
-    /*    background-color: #44398a32;*/
-    /*}*/
-
-    .layout {
-        width: 500px;
-        margin: 0 auto;
-        margin-top: 40px;
-    }
-
-    .layout input {
-        float: left;
-        width: 83%;
-        margin-top: 30px;
-        box-sizing: border-box;
-
-    }
-
-    .layout button {
-        width: 15%;
-        margin-top: 30px;
-        float: right;
-    }
-
-    .main {
-        text-align: center;
-        color: rgb(31, 83, 86);
-        font-size: 40px;
-
-        margin-top: 30px;
-        margin-bottom: 10px;
-    }
-
-    .layout input, button {
-        height: 50px;
-
-        background-color: white;
-        border-radius: 12px;
-
-        margin-bottom: 10px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #44398a8e;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        text-decoration: none;
-
-        box-shadow: 3px 3px 5px 0px black;
-    }
-
-    .list table {
-        margin-left: auto;
-        margin-right: auto;
-        width: 40%;
-        border-top: 1px solid #444444;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        margin-left: auto;
-        margin-right: auto;
-        border-bottom: 1px solid #444444;
-        padding: 10px;
-    }
-
-    .editor {
-        font-size: 18px;
-        outline: none;
-        border: none;
-
-        /*border-right:0px;*/
-        /*border-top:0px;*/
-        /*boder-left:0px;*/
-        /*boder-bottom:0px;"*/
-
-        /*background-color: #44398a32;*/
-    }
-
-</style>
 
 
 <body>
@@ -99,50 +14,49 @@
     <h1 class="main">Todo List</h1>
     <form action="/todolist/writepro" method="post">
         <input name="title" type="text" maxlength='11'>
-        <button type="submit">작성</button>
+        <button id="btn0" type="submit">작성</button>
     </form>
-
 </div>
 <div class="list">
     <table style="border:4px">
-        <!--        <thead>-->
-        <!--        <tr>-->
-        <!--            <th>글번호</th>-->
-        <!--            <th>제목</th>-->
-        <!--            <th>날짜</th>-->
-        <!--        </tr>-->
-        <!--        </thead>-->
         <tbody>
         <tr th:each="tdl : ${list}">
-<!--            <td style="text-align:center" th:text="${tdl.id}">1</td>-->
             <td><input type="checkbox"></td>
-
             <td>
                 <form name="id" id="modify" th:action="@{/todolist/update/{id}(id = ${tdl.id})}" method="post">
                     <input class="editor" th:value="${tdl.title}" name="title" type="text" maxlength='11'>
                     <a></a>
-<!--                <input class="editor" onclick="" th:value="${tdl.title}" th:text="${tdl.title}">-->
-<!--            <input contenteditable="true">-->
+                    <!--                <input class="editor" onclick="" th:value="${tdl.title}" th:text="${tdl.title}">-->
+                    <!--            <input contenteditable="true">-->
                 </form>
             </td>
             <td style="text-align:center" th:text="${tdl.date}">날짜</td>
 
-            <td>
-                <!--            <form action="/todolist/delete" method="post">-->
-                <!--                <button style="float: right" type="submit" th:href="@{/todolist/delete(id=${tdl.id})}">삭제</button>-->
-                <!--            </form>-->
-                <button style="float: right" type="submit"
+            <td id="btn_group">
+                <button id="btn1" style="float: right" type="submit"
                         th:onclick="|location.href='@{/todolist/delete(id=${tdl.id})}'|">삭제
                 </button>
+
+                <button id="btn2" style="float: right" type="submit"
+                        th:onclick="add_textBox()">댓글
+                </button>
+
             </td>
-
-
         </tr>
         </tbody>
     </table>
+
+
 </div>
 <script>
     document.id.submit();
+
+
+    function add_textBox() {
+        document.getElementById("modify").innerHTML +=
+            "<table><input id='test' type='text' name='tbox' ></table><br>";
+    }
+
     // document.getElementById('modify').addEventListener('blur', function () {
     //     document.id.submit();
     //     alert("포커스 아웃, 함수 실행.");
