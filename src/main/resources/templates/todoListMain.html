@@ -17,19 +17,21 @@
         <button id="btn0" type="submit">작성</button>
     </form>
 </div>
+
+
 <div class="list">
     <table style="border:4px">
         <tbody>
         <tr th:each="tdl : ${list}">
+
             <td><input type="checkbox"></td>
+
             <td>
                 <form name="id" id="modify" th:action="@{/todolist/update/{id}(id = ${tdl.id})}" method="post">
                     <input class="editor" th:value="${tdl.title}" name="title" type="text" maxlength='11'>
-                    <a></a>
-                    <!--                <input class="editor" onclick="" th:value="${tdl.title}" th:text="${tdl.title}">-->
-                    <!--            <input contenteditable="true">-->
                 </form>
             </td>
+
             <td style="text-align:center" th:text="${tdl.date}">날짜</td>
 
             <td id="btn_group">
@@ -40,27 +42,29 @@
                 <button id="btn2" style="float: right" type="submit"
                         th:onclick="add_textBox()">댓글
                 </button>
-
             </td>
+
         </tr>
+
+<!--        <tr id="test1"> 수정해야함-->
+<!--        </tr>-->
+
         </tbody>
     </table>
-
-
 </div>
+
+
+
 <script>
     document.id.submit();
 
 
     function add_textBox() {
-        document.getElementById("modify").innerHTML +=
-            "<table><input id='test' type='text' name='tbox' ></table><br>";
+        document.getElementById("test1").innerHTML +=
+            "<input id='test' type='text' name='tbox' >";
     }
 
-    // document.getElementById('modify').addEventListener('blur', function () {
-    //     document.id.submit();
-    //     alert("포커스 아웃, 함수 실행.");
-    // }); 입력창에서 입력하다가 다른 곳을 클릭했을때 입력하던 값을 DB안에 저장하기 실패
+
 </script>
 
 </body>
